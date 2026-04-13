@@ -34,11 +34,10 @@ input::placeholder { color: #5e5e58; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin-bottom: 13px; }
 .form-row.solo { grid-template-columns: 1fr; }
 .err-box { background: #1a0808; border: 1px solid #4a1a1a; border-radius: 8px; padding: 14px 16px; margin-top: 14px; font-family: 'Courier New', monospace; font-size: 12px; color: #d46b6b; line-height: 1.7; }
-.err-label { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.6; margin-bottom: 5px; }
 .loading-outer { max-width: 460px; margin: 100px auto; padding: 0 22px; text-align: center; }
 .spinner { width: 34px; height: 34px; border: 2px solid #2e2f2b; border-top-color: #7ec87a; border-radius: 50%; animation: spin 0.75s linear infinite; margin: 0 auto 22px; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.loading-msg { font-family: 'Courier New', monospace; font-size: 11px; color: #9a9a94; letter-spacing: 0.05em; animation: fadeup 0.35s ease; }
+.loading-msg { font-family: 'Courier New', monospace; font-size: 11px; color: #9a9a94; letter-spacing: 0.05em; }
 @keyframes fadeup { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 .brief-outer { max-width: 800px; margin: 0 auto; padding: 36px 22px 90px; }
 .brief-nav { display: flex; align-items: center; gap: 14px; margin-bottom: 36px; flex-wrap: wrap; }
@@ -57,7 +56,6 @@ input::placeholder { color: #5e5e58; }
 .ov-label { font-family: 'Courier New', monospace; font-size: 9px; color: #5e5e58; letter-spacing: 0.11em; text-transform: uppercase; margin-bottom: 4px; }
 .ov-val { font-size: 14px; color: #e8e8e4; font-weight: bold; font-family: Arial, sans-serif; }
 .ov-val a { color: #6baed4; text-decoration: none; }
-.ov-val a:hover { text-decoration: underline; }
 .align-card { background: #161714; border: 1px solid #2e2f2b; border-radius: 10px; padding: 20px 22px; }
 .align-prose { font-size: 14px; color: #9a9a94; line-height: 1.8; margin-bottom: 15px; font-family: Arial, sans-serif; }
 .framing-row { border-radius: 7px; padding: 11px 15px; display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.65; font-family: Arial, sans-serif; }
@@ -115,7 +113,6 @@ input::placeholder { color: #5e5e58; }
 </style>
 </head>
 <body>
-
 <header class="hdr">
   <div class="hdr-left">
     <div class="hdr-mark">✦</div>
@@ -126,7 +123,6 @@ input::placeholder { color: #5e5e58; }
   </div>
   <div class="hdr-badge">Internal Tool</div>
 </header>
-
 <div id="screen-form">
   <div class="outer">
     <div class="eyebrow">Discovery Call Briefing</div>
@@ -144,14 +140,12 @@ input::placeholder { color: #5e5e58; }
     </div>
   </div>
 </div>
-
 <div id="screen-loading" class="hidden">
   <div class="loading-outer">
     <div class="spinner"></div>
     <div class="loading-msg" id="load-msg">Researching company…</div>
   </div>
 </div>
-
 <div id="screen-briefing" class="hidden">
   <div class="brief-outer">
     <div class="brief-nav">
@@ -188,30 +182,25 @@ input::placeholder { color: #5e5e58; }
     <div class="sec"><div class="sec-label">Reminders for Call Success</div><div class="rem-grid" id="b-reminders"></div></div>
   </div>
 </div>
-
 <script>
 const KEY = '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';
-
 const SCREENS = ['screen-form','screen-loading','screen-briefing'];
 const MSGS = ['Researching company…','Scanning recent news…','Building point person profile…','Drafting discovery questions…','Assembling talking points…','Finalizing briefing…','Almost there…'];
 const STANDARD_QS = [
-  { label: 'Strategy',               text: 'Tell me about your CSR strategy and goals — what are you most focused on right now?' },
-  { label: 'Partnership success',    text: "What is the best partnership or engagement you've had, and what made it so effective?" },
-  { label: 'Barriers to partnership',text: "What are some of the reasons partnerships don't move forward at this stage?" },
-  { label: 'Timeline',               text: 'Do you have any events or milestones coming up that we should be aware of?' },
-  { label: 'Team',                   text: 'What does the decision-making team and process look like for considering new nonprofit partners?' },
-  { label: 'Budget',                 text: 'Do you have a budget for bringing on new partners, and how do you think about it?' },
-  { label: 'Next steps',             text: 'If this does seem like a good fit for your team, what would the next steps after this call be?' }
+  { label: 'Strategy', text: 'Tell me about your CSR strategy and goals — what are you most focused on right now?' },
+  { label: 'Partnership success', text: "What is the best partnership or engagement you've had, and what made it so effective?" },
+  { label: 'Barriers to partnership', text: "What are some of the reasons partnerships don't move forward at this stage?" },
+  { label: 'Timeline', text: 'Do you have any events or milestones coming up that we should be aware of?' },
+  { label: 'Team', text: 'What does the decision-making team and process look like for considering new nonprofit partners?' },
+  { label: 'Budget', text: 'Do you have a budget for bringing on new partners, and how do you think about it?' },
+  { label: 'Next steps', text: 'If this does seem like a good fit for your team, what would the next steps after this call be?' }
 ];
-
 let loadTimer = null, C = {};
-
 function show(id) { SCREENS.forEach(s => document.getElementById(s).classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); }
 function x(s) { return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function backToForm() { document.getElementById('form-err').classList.add('hidden'); document.getElementById('gen-btn').disabled = false; show('screen-form'); }
 function startMsgs() { let i=0; const el=document.getElementById('load-msg'); el.textContent=MSGS[0]; loadTimer=setInterval(()=>{ i=(i+1)%MSGS.length; el.style.animation='none'; void el.offsetHeight; el.style.animation='fadeup 0.35s ease'; el.textContent=MSGS[i]; },2600); }
 function stopMsgs() { clearInterval(loadTimer); }
-
 async function generate() {
   const first=document.getElementById('f-first').value.trim();
   const last=document.getElementById('f-last').value.trim();
@@ -221,36 +210,7 @@ async function generate() {
   document.getElementById('form-err').classList.add('hidden');
   document.getElementById('gen-btn').disabled=true;
   C={first,last,title,co}; show('screen-loading'); startMsgs();
-
-  const SYS=`You are a corporate partnership research assistant for NY Sun Works, a nonprofit that delivers hands-on sustainability science and STEM education to K-8 students (ages 5-14) across 370 NYC schools, reaching 140,000 students annually.
-ABOUT NY SUN WORKS:
-Mission: Climate and sustainability science education. NY Sun Works uses hydroponic classroom ecosystems to teach biology, ecology, environmental science, and the scientific method. This is NOT framed as workforce development — but it does build the early science foundation that feeds longer-term STEM and sustainability workforce pipelines. Reinforce this pipeline angle, but always lead with science education and climate literacy first.
-Partner benefits: Group hands-on volunteering (building hydroponic classrooms, mentoring students), annual youth science conference at Javits Center (1,200+ students), access to NYC/NYS government officials and policy-makers at ribbon cuttings and events, brand partnership and storytelling, social media/newsletter/co-branding, partnership levels $10K-$100K/year.
-Past partners for social proof: EY, Con Edison, Bregal Investments, CVC, NY Power Authority, Bear Maple, Clean Path NY.
-Partnership team: Megan Nordgren manages partnerships. Amanda handles day-to-day relationship management.
-STRATEGIC RULES:
-Lead with science education and climate literacy, and reinforce the early workforce pipeline angle.
-For PUBLIC POLICY contacts: emphasize access to policy-makers and government officials.
-For MARKETING/BRAND contacts: lead with brand partnership, storytelling, social media.
-For CSR/FOUNDATION contacts: lead with strategic fit, depth, social proof from peer companies.
-Listen 90% of the time on discovery calls. Understand priorities before pitching.
-Companies do FEWER but DEEPER partnerships — strategic fit and multi-avenue engagement matter.
-If contact is junior: primary call objective is qualifying fit AND earning a meeting with their boss.
-Always include age ranges when referencing students (K-8, ages 5-14).
-Private foundations make direct grants, not DAFs.
-Social proof and case studies carry enormous weight.
-Access to policy-makers and community credibility is a growing value driver for corporate partners.
-BRIEFING RULES:
-Call objective card: assess seniority, set objective accordingly. Junior = qualify fit + get meeting with boss.
-News: frame each item by what it means for NYSW. Short 2-4 word tag, date secondary.
-Point person section: structured bullets — org chart position, role responsibilities, team and decision-makers, objectives for call, NYSW takeaways.
-Questions: The 7 standard questions are already hardcoded in the UI. Generate ONLY tailored questions specific to this company and contact based on your research — recent news, stated priorities, company initiatives, or anything that creates a specific and relevant opening. Label every question. No yes/no traps.
-Talking points: TP1 = what NYSW does (STEM/science/climate + early pipeline). TP2 = who NYSW serves (140K students, ages 5-14, under-resourced schools, opportunity gap). Keep distinct, no overlap.
-Reminders: frame by strategic insight, not source name.
-Framing notes: green = lean into this, amber = be careful here.
-Return ONLY valid JSON with these exact keys:
-{"date":"today's date Month D YYYY","call_objective_headline":"short headline","call_objective_body":"2-3 sentences","call_close_line":"suggested closing line","company_url":"URL to their CSR or foundation page if known, else null","company_alignment_prose":"2-3 sentences","framing_note":"1-2 sentences","framing_type":"green or amber","news":[{"tag":"2-4 words","date":"month year","body":"1-2 sentences","implication":"what it means for NYSW","has_framing_note":false}],"foundation_badge":false,"badge_text":null,"point_person":{"org_chart":"...","responsibilities":"...","team_and_decisions":"...","objectives":"...","nysw_takeaways":"..."},"questions_tailored":[{"label":"category","text":"question"}],"talking_points":[{"title":"...","body":"..."}],"learn":{"next_steps":"...","timeline":"...","decision_makers":"...","budget":"...","partnership_level":"..."},"reminders":[{"title":"...","body":"..."}]}`;
-
+  const SYS=`You are a corporate partnership research assistant for NY Sun Works, a nonprofit that delivers hands-on sustainability science and STEM education to K-8 students (ages 5-14) across 370 NYC schools, reaching 140,000 students annually.\nABOUT NY SUN WORKS:\nMission: Climate and sustainability science education. NY Sun Works uses hydroponic classroom ecosystems to teach biology, ecology, environmental science, and the scientific method. This is NOT framed as workforce development — but it does build the early science foundation that feeds longer-term STEM and sustainability workforce pipelines. Reinforce this pipeline angle, but always lead with science education and climate literacy first.\nPartner benefits: Group hands-on volunteering (building hydroponic classrooms, mentoring students), annual youth science conference at Javits Center (1,200+ students), access to NYC/NYS government officials and policy-makers at ribbon cuttings and events, brand partnership and storytelling, social media/newsletter/co-branding, partnership levels $10K-$100K/year.\nPast partners for social proof: EY, Con Edison, Bregal Investments, CVC, NY Power Authority, Bear Maple, Clean Path NY.\nPartnership team: Megan Nordgren manages partnerships. Amanda handles day-to-day relationship management.\nSTRATEGIC RULES:\nLead with science education and climate literacy, and reinforce the early workforce pipeline angle.\nFor PUBLIC POLICY contacts: emphasize access to policy-makers and government officials.\nFor MARKETING/BRAND contacts: lead with brand partnership, storytelling, social media.\nFor CSR/FOUNDATION contacts: lead with strategic fit, depth, social proof from peer companies.\nListen 90% of the time on discovery calls. Understand priorities before pitching.\nCompanies do FEWER but DEEPER partnerships — strategic fit and multi-avenue engagement matter.\nIf contact is junior: primary call objective is qualifying fit AND earning a meeting with their boss.\nAlways include age ranges when referencing students (K-8, ages 5-14).\nPrivate foundations make direct grants, not DAFs.\nSocial proof and case studies carry enormous weight.\nAccess to policy-makers and community credibility is a growing value driver for corporate partners.\nBRIEFING RULES:\nCall objective card: assess seniority, set objective accordingly. Junior = qualify fit + get meeting with boss.\nNews: frame each item by what it means for NYSW. Short 2-4 word tag, date secondary.\nPoint person section: structured bullets — org chart position, role responsibilities, team and decision-makers, objectives for call, NYSW takeaways.\nQuestions: The 7 standard questions are already hardcoded in the UI. Generate ONLY tailored questions specific to this company and contact based on your research — recent news, stated priorities, company initiatives, or anything that creates a specific and relevant opening. Label every question. No yes/no traps.\nTalking points: TP1 = what NYSW does (STEM/science/climate + early pipeline). TP2 = who NYSW serves (140K students, ages 5-14, under-resourced schools, opportunity gap). Keep distinct, no overlap.\nReminders: frame by strategic insight, not source name.\nFraming notes: green = lean into this, amber = be careful here.\nReturn ONLY valid JSON with these exact keys:\n{"date":"today\'s date Month D YYYY","call_objective_headline":"short headline","call_objective_body":"2-3 sentences","call_close_line":"suggested closing line","company_url":"URL to their CSR or foundation page if known, else null","company_alignment_prose":"2-3 sentences","framing_note":"1-2 sentences","framing_type":"green or amber","news":[{"tag":"2-4 words","date":"month year","body":"1-2 sentences","implication":"what it means for NYSW","has_framing_note":false}],"foundation_badge":false,"badge_text":null,"point_person":{"org_chart":"...","responsibilities":"...","team_and_decisions":"...","objectives":"...","nysw_takeaways":"..."},"questions_tailored":[{"label":"category","text":"question"}],"talking_points":[{"title":"...","body":"..."}],"learn":{"next_steps":"...","timeline":"...","decision_makers":"...","budget":"...","partnership_level":"..."},"reminders":[{"title":"...","body":"..."}]}`;
   try {
     const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:8000,system:SYS,messages:[{role:'user',content:`Research ${first} ${last}, ${title} at ${co}, and generate a full discovery call briefing for NY Sun Works. Use web search to find recent news, the contact's background, and any CSR/sustainability/foundation activity.`}],tools:[{type:'web_search_20250305',name:'web_search'}]})});
     stopMsgs();
@@ -269,7 +229,6 @@ Return ONLY valid JSON with these exact keys:
     show('screen-form');
   }
 }
-
 function render(b) {
   const{first,last,title,co}=C;
   document.getElementById('b-meta').textContent=`${b.date||''} · ${first} ${last} · ${co}`;
