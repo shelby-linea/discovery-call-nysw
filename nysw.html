@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NY Sun Works · Call Prep</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0e0f0c; color: #e8e8e4; font-family: Georgia, 'Times New Roman', serif; font-size: 15px; line-height: 1.6; min-height: 100vh; }
+.hdr { border-bottom: 1px solid #2e2f2b; padding: 15px 28px; display: flex; align-items: center; justify-content: space-between; background: #0e0f0c; position: sticky; top: 0; z-index: 99; }
+.hdr-left { display: flex; align-items: center; gap: 11px; }
+.hdr-mark { width: 27px; height: 27px; background: #7ec87a; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: #0e0f0c; font-size: 15px; font-family: Georgia, serif; }
+.hdr-name { font-size: 16px; color: #e8e8e4; }
+.hdr-sub { font-size: 10px; color: #5e5e58; font-family: 'Courier New', monospace; letter-spacing: 0.07em; text-transform: uppercase; margin-top: 1px; }
+.hdr-badge { font-family: 'Courier New', monospace; font-size: 10px; color: #7ec87a; background: #1a2419; border: 1px solid #4a7a47; border-radius: 20px; padding: 3px 10px; letter-spacing: 0.06em; text-transform: uppercase; }
+.outer { max-width: 500px; margin: 64px auto; padding: 0 22px; }
+.eyebrow { font-family: 'Courier New', monospace; font-size: 10px; color: #7ec87a; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px; }
+.screen-title { font-size: 32px; letter-spacing: -0.02em; color: #e8e8e4; margin-bottom: 8px; line-height: 1.2; }
+.screen-title em { font-style: italic; color: #7ec87a; }
+.screen-sub { color: #9a9a94; font-size: 13px; margin-bottom: 32px; line-height: 1.75; font-family: Arial, sans-serif; }
+.card { background: #161714; border: 1px solid #2e2f2b; border-radius: 11px; padding: 28px; }
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.field:last-of-type { margin-bottom: 0; }
+label { font-family: 'Courier New', monospace; font-size: 10px; color: #5e5e58; letter-spacing: 0.1em; text-transform: uppercase; }
+input { background: #1e1f1c; border: 1px solid #2e2f2b; border-radius: 7px; color: #e8e8e4; font-family: Arial, sans-serif; font-size: 14px; padding: 10px 13px; outline: none; transition: border-color 0.15s; width: 100%; }
+input:focus { border-color: #4a7a47; background: #252622; }
+input::placeholder { color: #5e5e58; }
+.btn-primary { width: 100%; margin-top: 18px; background: #7ec87a; color: #0e0f0c; border: none; border-radius: 7px; font-family: Arial, sans-serif; font-size: 14px; font-weight: 700; padding: 12px 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: opacity 0.15s, transform 0.1s; }
+.btn-primary:hover { opacity: 0.87; transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+.btn-sec { display: flex; align-items: center; gap: 7px; background: #161714; border: 1px solid #2e2f2b; border-radius: 7px; color: #9a9a94; font-family: Arial, sans-serif; font-size: 13px; padding: 8px 14px; cursor: pointer; transition: border-color 0.15s, color 0.15s; }
+.btn-sec:hover { border-color: #3a3b37; color: #e8e8e4; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin-bottom: 13px; }
+.form-row.solo { grid-template-columns: 1fr; }
+.err-box { background: #1a0808; border: 1px solid #4a1a1a; border-radius: 8px; padding: 14px 16px; margin-top: 14px; font-family: 'Courier New', monospace; font-size: 12px; color: #d46b6b; line-height: 1.7; }
+.err-label { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.6; margin-bottom: 5px; }
+.loading-outer { max-width: 460px; margin: 100px auto; padding: 0 22px; text-align: center; }
+.spinner { width: 34px; height: 34px; border: 2px solid #2e2f2b; border-top-color: #7ec87a; border-radius: 50%; animation: spin 0.75s linear infinite; margin: 0 auto 22px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-msg { font-family: 'Courier New', monospace; font-size: 11px; color: #9a9a94; letter-spacing: 0.05em; animation: fadeup 0.35s ease; }
+@keyframes fadeup { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+.brief-outer { max-width: 800px; margin: 0 auto; padding: 36px 22px 90px; }
+.brief-nav { display: flex; align-items: center; gap: 14px; margin-bottom: 36px; flex-wrap: wrap; }
+.brief-meta { font-family: 'Courier New', monospace; font-size: 11px; color: #5e5e58; letter-spacing: 0.05em; }
+.sec { margin-bottom: 26px; }
+.sec-label { font-family: 'Courier New', monospace; font-size: 10px; color: #5e5e58; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 9px; display: flex; align-items: center; gap: 8px; }
+.sec-label::after { content: ''; flex: 1; height: 1px; background: #2e2f2b; }
+.obj-card { background: #0b1a12; border: 1px solid #4a7a47; border-radius: 11px; padding: 26px 28px; position: relative; overflow: hidden; }
+.obj-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #7ec87a, transparent); }
+.obj-headline { font-size: 21px; letter-spacing: -0.01em; color: #7ec87a; margin-bottom: 9px; line-height: 1.3; }
+.obj-body { color: #9a9a94; font-size: 14px; line-height: 1.8; margin-bottom: 16px; font-family: Arial, sans-serif; }
+.close-box { background: rgba(126,200,122,0.06); border: 1px solid #4a7a47; border-radius: 6px; padding: 11px 15px; display: flex; align-items: flex-start; gap: 10px; }
+.close-tag { font-family: 'Courier New', monospace; font-size: 9px; color: #7ec87a; letter-spacing: 0.09em; text-transform: uppercase; white-space: nowrap; margin-top: 3px; opacity: 0.7; }
+.close-text { font-style: italic; color: #e8e8e4; font-size: 14px; line-height: 1.6; }
+.overview-card { background: #161714; border: 1px solid #2e2f2b; border-radius: 10px; padding: 20px 22px; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 18px; }
+.ov-label { font-family: 'Courier New', monospace; font-size: 9px; color: #5e5e58; letter-spacing: 0.11em; text-transform: uppercase; margin-bottom: 4px; }
+.ov-val { font-size: 14px; color: #e8e8e4; font-weight: bold; font-family: Arial, sans-serif; }
+.ov-val a { color: #6baed4; text-decoration: none; }
+.ov-val a:hover { text-decoration: underline; }
+.align-card { background: #161714; border: 1px solid #2e2f2b; border-radius: 10px; padding: 20px 22px; }
+.align-prose { font-size: 14px; color: #9a9a94; line-height: 1.8; margin-bottom: 15px; font-family: Arial, sans-serif; }
+.framing-row { border-radius: 7px; padding: 11px 15px; display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.65; font-family: Arial, sans-serif; }
+.framing-row.green { background: #1a2419; border: 1px solid #4a7a47; color: #9a9a94; }
+.framing-row.amber { background: #231d0f; border: 1px solid #7a5e2a; color: #9a9a94; }
+.dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+.dot.green { background: #7ec87a; }
+.dot.amber { background: #d4a84b; }
+.news-grid { display: flex; flex-direction: column; gap: 9px; }
+.news-item { background: #161714; border: 1px solid #2e2f2b; border-radius: 9px; padding: 15px 17px; }
+.news-hdr { display: flex; align-items: center; gap: 9px; margin-bottom: 7px; flex-wrap: wrap; }
+.news-tag { font-family: 'Courier New', monospace; font-size: 12px; font-weight: bold; color: #e8e8e4; }
+.news-date { font-family: 'Courier New', monospace; font-size: 10px; color: #5e5e58; }
+.amber-pill { font-family: 'Courier New', monospace; font-size: 9px; color: #d4a84b; background: #231d0f; border: 1px solid #7a5e2a; border-radius: 20px; padding: 2px 8px; letter-spacing: 0.06em; text-transform: uppercase; }
+.news-body { font-size: 13px; color: #9a9a94; line-height: 1.65; margin-bottom: 8px; font-family: Arial, sans-serif; }
+.news-impl { font-size: 12px; font-style: italic; color: #7ec87a; line-height: 1.5; font-family: Arial, sans-serif; }
+.pp-card { background: #161714; border: 1px solid #2e2f2b; border-radius: 10px; overflow: hidden; }
+.pp-hdr { background: #1e1f1c; border-bottom: 1px solid #2e2f2b; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; }
+.pp-name { font-size: 19px; letter-spacing: -0.01em; color: #e8e8e4; }
+.pp-role { font-size: 13px; color: #9a9a94; margin-top: 2px; font-family: Arial, sans-serif; }
+.found-badge { font-family: 'Courier New', monospace; font-size: 9px; color: #7ec87a; background: #1a2419; border: 1px solid #4a7a47; border-radius: 20px; padding: 3px 10px; letter-spacing: 0.07em; text-transform: uppercase; }
+.pp-row { display: grid; grid-template-columns: 155px 1fr; gap: 12px; padding: 12px 20px; border-bottom: 1px solid #2e2f2b; }
+.pp-row:last-child { border-bottom: none; }
+.pp-rl { font-family: 'Courier New', monospace; font-size: 9px; color: #5e5e58; letter-spacing: 0.09em; text-transform: uppercase; padding-top: 2px; }
+.pp-rv { font-size: 13px; color: #9a9a94; line-height: 1.7; font-family: Arial, sans-serif; }
+.q-grid { display: flex; flex-direction: column; gap: 8px; }
+.q-divider { font-family: 'Courier New', monospace; font-size: 10px; color: #5e5e58; letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 0 2px; }
+.q-item { background: #161714; border: 1px solid #2e2f2b; border-radius: 8px; padding: 12px 15px; display: flex; align-items: flex-start; gap: 11px; }
+.q-tag { font-family: 'Courier New', monospace; font-size: 9px; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 8px; border-radius: 20px; white-space: nowrap; margin-top: 1px; flex-shrink: 0; }
+.q-tag.blue { color: #6baed4; background: #111e2a; border: 1px solid #1e3d54; }
+.q-tag.amber { color: #d4a84b; background: #231d0f; border: 1px solid #7a5e2a; }
+.q-text { font-size: 13px; color: #9a9a94; line-height: 1.65; font-family: Arial, sans-serif; }
+.tp-note { font-family: 'Courier New', monospace; font-size: 10px; color: #5e5e58; font-style: italic; margin-bottom: 11px; letter-spacing: 0.04em; }
+.tp-grid { display: flex; flex-direction: column; gap: 9px; }
+.tp-item { background: #161714; border: 1px solid #2e2f2b; border-radius: 9px; padding: 15px 17px; display: flex; gap: 14px; align-items: flex-start; }
+.tp-num { font-size: 22px; color: #3a3b37; font-family: Georgia, serif; line-height: 1; flex-shrink: 0; width: 20px; text-align: center; margin-top: 1px; }
+.tp-title { font-size: 13px; font-weight: bold; color: #e8e8e4; margin-bottom: 4px; font-family: Arial, sans-serif; }
+.tp-body { font-size: 13px; color: #9a9a94; line-height: 1.7; font-family: Arial, sans-serif; }
+.learn-grid { display: flex; flex-direction: column; gap: 8px; }
+.learn-item { background: #161714; border: 1px solid #2e2f2b; border-radius: 8px; padding: 12px 15px; display: flex; align-items: flex-start; gap: 13px; }
+.learn-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 12px; margin-top: 1px; font-family: Arial, sans-serif; }
+.learn-icon.green { background: #1a2419; color: #7ec87a; border: 1px solid #4a7a47; }
+.learn-icon.blue { background: #111e2a; color: #6baed4; border: 1px solid #1e3d54; }
+.learn-icon.amber { background: #231d0f; color: #d4a84b; border: 1px solid #7a5e2a; }
+.learn-icon.red { background: #1a0808; color: #d46b6b; border: 1px solid #4a1a1a; }
+.learn-icon.purple { background: #1e1529; color: #a888d4; border: 1px solid #3a2454; }
+.learn-lbl { font-family: 'Courier New', monospace; font-size: 9px; color: #5e5e58; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 3px; }
+.learn-val { font-size: 13px; color: #9a9a94; line-height: 1.65; font-family: Arial, sans-serif; }
+.rem-grid { display: flex; flex-direction: column; gap: 8px; }
+.rem-item { background: #161714; border: 1px solid #2e2f2b; border-left: 3px solid #3a3b37; border-radius: 0 8px 8px 0; padding: 12px 16px; }
+.rem-title { font-size: 13px; font-weight: bold; color: #e8e8e4; margin-bottom: 4px; font-family: Arial, sans-serif; }
+.rem-body { font-size: 13px; color: #9a9a94; line-height: 1.65; font-family: Arial, sans-serif; }
+.hidden { display: none !important; }
+@media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } .pp-row { grid-template-columns: 1fr; gap: 3px; } .overview-card { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-left">
+    <div class="hdr-mark">✦</div>
+    <div>
+      <div class="hdr-name">NY Sun Works</div>
+      <div class="hdr-sub">Call Prep · Partnerships</div>
+    </div>
+  </div>
+  <div class="hdr-badge">Internal Tool</div>
+</header>
+
+<div id="screen-form">
+  <div class="outer">
+    <div class="eyebrow">Discovery Call Briefing</div>
+    <h1 class="screen-title">Who are you<br><em>meeting with?</em></h1>
+    <p class="screen-sub">Enter your contact's details and we'll research them and generate a full call briefing.</p>
+    <div class="card">
+      <div class="form-row">
+        <div class="field"><label for="f-first">First Name</label><input type="text" id="f-first" placeholder="Jane" autocomplete="off"></div>
+        <div class="field"><label for="f-last">Last Name</label><input type="text" id="f-last" placeholder="Smith" autocomplete="off"></div>
+      </div>
+      <div class="form-row solo"><div class="field"><label for="f-title">Title</label><input type="text" id="f-title" placeholder="VP, Corporate Social Responsibility" autocomplete="off"></div></div>
+      <div class="form-row solo"><div class="field"><label for="f-co">Company</label><input type="text" id="f-co" placeholder="Acme Corp" autocomplete="off"></div></div>
+      <div id="form-err" class="hidden"><div class="err-box"><div class="err-label">Error</div><div id="form-err-msg"></div></div></div>
+      <button class="btn-primary" id="gen-btn" onclick="generate()">✦ Generate Briefing</button>
+    </div>
+  </div>
+</div>
+
+<div id="screen-loading" class="hidden">
+  <div class="loading-outer">
+    <div class="spinner"></div>
+    <div class="loading-msg" id="load-msg">Researching company…</div>
+  </div>
+</div>
+
+<div id="screen-briefing" class="hidden">
+  <div class="brief-outer">
+    <div class="brief-nav">
+      <button class="btn-sec" onclick="backToForm()">← New briefing</button>
+      <div class="brief-meta" id="b-meta"></div>
+    </div>
+    <div class="sec"><div class="sec-label">Call Objective</div>
+      <div class="obj-card">
+        <div class="obj-headline" id="b-obj-hl"></div>
+        <div class="obj-body" id="b-obj-body"></div>
+        <div class="close-box"><div class="close-tag">Suggested close</div><div class="close-text" id="b-close"></div></div>
+      </div>
+    </div>
+    <div class="sec"><div class="sec-label">Overview</div><div class="overview-card" id="b-overview"></div></div>
+    <div class="sec"><div class="sec-label">Company Alignment</div>
+      <div class="align-card">
+        <div class="align-prose" id="b-align-prose"></div>
+        <div class="framing-row" id="b-framing"><div class="dot" id="b-dot"></div><div id="b-framing-text"></div></div>
+      </div>
+    </div>
+    <div class="sec"><div class="sec-label">News &amp; Org Strategy</div><div class="news-grid" id="b-news"></div></div>
+    <div class="sec"><div class="sec-label">Point Person</div>
+      <div class="pp-card">
+        <div class="pp-hdr"><div><div class="pp-name" id="b-pp-name"></div><div class="pp-role" id="b-pp-role"></div></div><div id="b-pp-badge"></div></div>
+        <div id="b-pp-rows"></div>
+      </div>
+    </div>
+    <div class="sec"><div class="sec-label">Discovery Questions</div><div class="q-grid" id="b-questions"></div></div>
+    <div class="sec"><div class="sec-label">Talking Points</div>
+      <div class="tp-note">Only deploy if asked — this call is 90% listening.</div>
+      <div class="tp-grid" id="b-tp"></div>
+    </div>
+    <div class="sec"><div class="sec-label">What to Learn on This Call</div><div class="learn-grid" id="b-learn"></div></div>
+    <div class="sec"><div class="sec-label">Reminders for Call Success</div><div class="rem-grid" id="b-reminders"></div></div>
+  </div>
+</div>
+
+<script>
+const KEY = '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';
+
+const SCREENS = ['screen-form','screen-loading','screen-briefing'];
+const MSGS = ['Researching company…','Scanning recent news…','Building point person profile…','Drafting discovery questions…','Assembling talking points…','Finalizing briefing…','Almost there…'];
+const STANDARD_QS = [
+  { label: 'Strategy',               text: 'Tell me about your CSR strategy and goals — what are you most focused on right now?' },
+  { label: 'Partnership success',    text: "What is the best partnership or engagement you've had, and what made it so effective?" },
+  { label: 'Barriers to partnership',text: "What are some of the reasons partnerships don't move forward at this stage?" },
+  { label: 'Timeline',               text: 'Do you have any events or milestones coming up that we should be aware of?' },
+  { label: 'Team',                   text: 'What does the decision-making team and process look like for considering new nonprofit partners?' },
+  { label: 'Budget',                 text: 'Do you have a budget for bringing on new partners, and how do you think about it?' },
+  { label: 'Next steps',             text: 'If this does seem like a good fit for your team, what would the next steps after this call be?' }
+];
+
+let loadTimer = null, C = {};
+
+function show(id) { SCREENS.forEach(s => document.getElementById(s).classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); }
+function x(s) { return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function backToForm() { document.getElementById('form-err').classList.add('hidden'); document.getElementById('gen-btn').disabled = false; show('screen-form'); }
+function startMsgs() { let i=0; const el=document.getElementById('load-msg'); el.textContent=MSGS[0]; loadTimer=setInterval(()=>{ i=(i+1)%MSGS.length; el.style.animation='none'; void el.offsetHeight; el.style.animation='fadeup 0.35s ease'; el.textContent=MSGS[i]; },2600); }
+function stopMsgs() { clearInterval(loadTimer); }
+
+async function generate() {
+  const first=document.getElementById('f-first').value.trim();
+  const last=document.getElementById('f-last').value.trim();
+  const title=document.getElementById('f-title').value.trim();
+  const co=document.getElementById('f-co').value.trim();
+  if(!first||!last||!title||!co){document.getElementById('form-err-msg').textContent='Please fill in all four fields.';document.getElementById('form-err').classList.remove('hidden');return;}
+  document.getElementById('form-err').classList.add('hidden');
+  document.getElementById('gen-btn').disabled=true;
+  C={first,last,title,co}; show('screen-loading'); startMsgs();
+
+  const SYS=`You are a corporate partnership research assistant for NY Sun Works, a nonprofit that delivers hands-on sustainability science and STEM education to K-8 students (ages 5-14) across 370 NYC schools, reaching 140,000 students annually.
+ABOUT NY SUN WORKS:
+Mission: Climate and sustainability science education. NY Sun Works uses hydroponic classroom ecosystems to teach biology, ecology, environmental science, and the scientific method. This is NOT framed as workforce development — but it does build the early science foundation that feeds longer-term STEM and sustainability workforce pipelines. Reinforce this pipeline angle, but always lead with science education and climate literacy first.
+Partner benefits: Group hands-on volunteering (building hydroponic classrooms, mentoring students), annual youth science conference at Javits Center (1,200+ students), access to NYC/NYS government officials and policy-makers at ribbon cuttings and events, brand partnership and storytelling, social media/newsletter/co-branding, partnership levels $10K-$100K/year.
+Past partners for social proof: EY, Con Edison, Bregal Investments, CVC, NY Power Authority, Bear Maple, Clean Path NY.
+Partnership team: Megan Nordgren manages partnerships. Amanda handles day-to-day relationship management.
+STRATEGIC RULES:
+Lead with science education and climate literacy, and reinforce the early workforce pipeline angle.
+For PUBLIC POLICY contacts: emphasize access to policy-makers and government officials.
+For MARKETING/BRAND contacts: lead with brand partnership, storytelling, social media.
+For CSR/FOUNDATION contacts: lead with strategic fit, depth, social proof from peer companies.
+Listen 90% of the time on discovery calls. Understand priorities before pitching.
+Companies do FEWER but DEEPER partnerships — strategic fit and multi-avenue engagement matter.
+If contact is junior: primary call objective is qualifying fit AND earning a meeting with their boss.
+Always include age ranges when referencing students (K-8, ages 5-14).
+Private foundations make direct grants, not DAFs.
+Social proof and case studies carry enormous weight.
+Access to policy-makers and community credibility is a growing value driver for corporate partners.
+BRIEFING RULES:
+Call objective card: assess seniority, set objective accordingly. Junior = qualify fit + get meeting with boss.
+News: frame each item by what it means for NYSW. Short 2-4 word tag, date secondary.
+Point person section: structured bullets — org chart position, role responsibilities, team and decision-makers, objectives for call, NYSW takeaways.
+Questions: The 7 standard questions are already hardcoded in the UI. Generate ONLY tailored questions specific to this company and contact based on your research — recent news, stated priorities, company initiatives, or anything that creates a specific and relevant opening. Label every question. No yes/no traps.
+Talking points: TP1 = what NYSW does (STEM/science/climate + early pipeline). TP2 = who NYSW serves (140K students, ages 5-14, under-resourced schools, opportunity gap). Keep distinct, no overlap.
+Reminders: frame by strategic insight, not source name.
+Framing notes: green = lean into this, amber = be careful here.
+Return ONLY valid JSON with these exact keys:
+{"date":"today's date Month D YYYY","call_objective_headline":"short headline","call_objective_body":"2-3 sentences","call_close_line":"suggested closing line","company_url":"URL to their CSR or foundation page if known, else null","company_alignment_prose":"2-3 sentences","framing_note":"1-2 sentences","framing_type":"green or amber","news":[{"tag":"2-4 words","date":"month year","body":"1-2 sentences","implication":"what it means for NYSW","has_framing_note":false}],"foundation_badge":false,"badge_text":null,"point_person":{"org_chart":"...","responsibilities":"...","team_and_decisions":"...","objectives":"...","nysw_takeaways":"..."},"questions_tailored":[{"label":"category","text":"question"}],"talking_points":[{"title":"...","body":"..."}],"learn":{"next_steps":"...","timeline":"...","decision_makers":"...","budget":"...","partnership_level":"..."},"reminders":[{"title":"...","body":"..."}]}`;
+
+  try {
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:8000,system:SYS,messages:[{role:'user',content:`Research ${first} ${last}, ${title} at ${co}, and generate a full discovery call briefing for NY Sun Works. Use web search to find recent news, the contact's background, and any CSR/sustainability/foundation activity.`}],tools:[{type:'web_search_20250305',name:'web_search'}]})});
+    stopMsgs();
+    if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(`API ${r.status}: ${e?.error?.message||r.statusText}`);}
+    const data=await r.json();
+    let raw=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+    raw=raw.replace(/^```json\s*/i,'').replace(/```\s*$/,'').trim();
+    let b;
+    try{b=JSON.parse(raw);}catch(_){const m=raw.match(/\{[\s\S]*\}/);if(m)b=JSON.parse(m[0]);else throw new Error('Could not parse response. Got: '+raw.slice(0,200));}
+    render(b); show('screen-briefing'); window.scrollTo(0,0);
+  } catch(err) {
+    stopMsgs();
+    document.getElementById('form-err-msg').textContent=err.message||'Unknown error.';
+    document.getElementById('form-err').classList.remove('hidden');
+    document.getElementById('gen-btn').disabled=false;
+    show('screen-form');
+  }
+}
+
+function render(b) {
+  const{first,last,title,co}=C;
+  document.getElementById('b-meta').textContent=`${b.date||''} · ${first} ${last} · ${co}`;
+  document.getElementById('b-obj-hl').textContent=b.call_objective_headline||'';
+  document.getElementById('b-obj-body').textContent=b.call_objective_body||'';
+  document.getElementById('b-close').textContent=b.call_close_line||'';
+  const coLink=b.company_url?`<a href="${x(b.company_url)}" target="_blank" rel="noopener">${x(co)}</a>`:x(co);
+  document.getElementById('b-overview').innerHTML=`<div><div class="ov-label">Date</div><div class="ov-val">${x(b.date)}</div></div><div><div class="ov-label">Company</div><div class="ov-val">${coLink}</div></div><div><div class="ov-label">Point Person</div><div class="ov-val">${x(first+' '+last)}</div></div><div><div class="ov-label">Title</div><div class="ov-val">${x(title)}</div></div>`;
+  document.getElementById('b-align-prose').textContent=b.company_alignment_prose||'';
+  const ft=(b.framing_type||'green').toLowerCase().trim();
+  document.getElementById('b-framing').className=`framing-row ${ft}`;
+  document.getElementById('b-dot').className=`dot ${ft}`;
+  document.getElementById('b-framing-text').textContent=b.framing_note||'';
+  document.getElementById('b-news').innerHTML=(b.news||[]).map(n=>`<div class="news-item"><div class="news-hdr"><span class="news-tag">${x(n.tag)}</span><span class="news-date">${x(n.date)}</span>${n.has_framing_note?'<span class="amber-pill">Note</span>':''}</div><div class="news-body">${x(n.body)}</div><div class="news-impl">→ ${x(n.implication)}</div></div>`).join('');
+  document.getElementById('b-pp-name').textContent=`${first} ${last}`;
+  document.getElementById('b-pp-role').textContent=title;
+  document.getElementById('b-pp-badge').innerHTML=(b.foundation_badge&&b.badge_text)?`<div class="found-badge">${x(b.badge_text)}</div>`:'';
+  const pp=b.point_person||{};
+  document.getElementById('b-pp-rows').innerHTML=[['Org Chart Position',pp.org_chart],['Role Responsibilities',pp.responsibilities],['Team & Decision-Makers',pp.team_and_decisions],['Objectives for This Call',pp.objectives],['NYSW Takeaways',pp.nysw_takeaways]].map(([l,v])=>`<div class="pp-row"><div class="pp-rl">${l}</div><div class="pp-rv">${x(v)}</div></div>`).join('');
+  const stdQs=STANDARD_QS.map(q=>`<div class="q-item"><div class="q-tag blue">${x(q.label)}</div><div class="q-text">${x(q.text)}</div></div>`).join('');
+  const tailored=b.questions_tailored||[];
+  const tailQs=tailored.map(q=>`<div class="q-item"><div class="q-tag amber">${x(q.label)}</div><div class="q-text">${x(q.text)}</div></div>`).join('');
+  const divider=tailored.length?`<div class="q-divider">Tailored to ${x(co)}</div>`:'';
+  document.getElementById('b-questions').innerHTML=stdQs+divider+tailQs;
+  document.getElementById('b-tp').innerHTML=(b.talking_points||[]).map((tp,i)=>`<div class="tp-item"><div class="tp-num">${i+1}</div><div><div class="tp-title">${x(tp.title)}</div><div class="tp-body">${x(tp.body)}</div></div></div>`).join('');
+  const lrn=b.learn||{};
+  document.getElementById('b-learn').innerHTML=[['Next Steps','→','green',lrn.next_steps],['Timeline','◷','blue',lrn.timeline],['Decision-Makers','◈','amber',lrn.decision_makers],['Budget','$','red',lrn.budget],['Assumed Level & Fit','⬡','purple',lrn.partnership_level]].map(([l,ic,cl,v])=>`<div class="learn-item"><div class="learn-icon ${cl}">${ic}</div><div><div class="learn-lbl">${l}</div><div class="learn-val">${x(v)}</div></div></div>`).join('');
+  document.getElementById('b-reminders').innerHTML=(b.reminders||[]).map(r=>`<div class="rem-item"><div class="rem-title">${x(r.title)}</div><div class="rem-body">${x(r.body)}</div></div>`).join('');
+}
+</script>
+</body>
+</html>
